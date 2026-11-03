@@ -1,0 +1,23 @@
+[Unit]
+Description=ScholarSync ML Forecasting & Risk Microservice
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/SCHOLARSHIP-FORECASTING
+Environment="PATH=/var/www/SCHOLARSHIP-FORECASTING/venv/bin"
+ExecStart=/var/www/SCHOLARSHIP-FORECASTING/venv/bin/gunicorn app:app -c gunicorn.conf.py
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=10
+Restart=always
+RestartSec=5
+
+# Security Hardening
+PrivateTmp=true
+ProtectSystem=full
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
